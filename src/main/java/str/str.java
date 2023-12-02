@@ -12,33 +12,33 @@ public class str {
         this.textscanner = textscanner;
     }
 
-    // 通过文件名构造输入字符对象
+    // initialize the input stream from a file
     public static str strSource(String file) throws FileNotFoundException, IOException {
         FileInputStream input = new FileInputStream(file);
         return strSource(input);
     }
 
-    // 通过文件输入流构造输入字符对象
+    // initialize the input stream from a FileInputStream
     public static str strSource(FileInputStream input) throws IOException {
         InputStreamReader inputstreamreader = new InputStreamReader(input);
         TextScanner textScanner1 = new TextScanner(inputstreamreader);
         return new str(textScanner1);
     }
 
-    // 尝试读取一行的内容
+    // try to get the next token
     public Token GetToken() throws IOException {
-        // EOF特判
+        // EOF
         if (textscanner.tmpChar == TextScanner.EOF) {
             textscanner.Close();
             return TokenTypes.String2Token("" + TextScanner.EOF);
         }
-        // 如果是空格换行，回车，tab则跳过
+        // ignore the space, tab, newline, carriage return
         while (textscanner.tmpChar == ' ' || textscanner.tmpChar == '\t' || textscanner.tmpChar == '\n'
                 || textscanner.tmpChar == '\r') {
             textscanner.Scan();
         }
 
-        // 如果第一个字符是数字，则尝试识别常数，读取相连的常数所有包含的字符
+        // if the first character is a digit, try to recognize a number
         if (IsDigit(textscanner.tmpChar)) {
             StringBuffer s = new StringBuffer();
             while (textscanner.tmpChar == '.' || IsDigit(textscanner.tmpChar)) {
@@ -52,7 +52,7 @@ public class str {
                 return new Token(TokenTypes.ERROR_TOKEN, String.valueOf(s), 0);
             }
         }
-        // 如果第一个字符是字母，则尝试识别保留字，参数，常数，函数，读取所有相连的字母和数字
+        // if the first character is a letter, try to recognize a keyword or a string
         else if (IsAlpha(textscanner.tmpChar)) {
             StringBuffer s = new StringBuffer();
             while (IsAlpha(textscanner.tmpChar)) {
@@ -61,28 +61,26 @@ public class str {
             }
             return TokenTypes.String2Token(String.valueOf(s));
         }
-        // 其他情况则尝试识别运算符，分隔符
+        // if the first character is a symbol, try to recognize a symbol
         else {
-            // 尝试识别单字符运算符
+            // unary operator
             Token t = TokenTypes.String2Token("" + textscanner.tmpChar);
             textscanner.Scan();
-            // 尝试识别幂
+            // exponentiation operator
             if (t.type == TokenTypes.MUL && textscanner.tmpChar == '*') {
                 t = TokenTypes.String2Token("**");
                 textscanner.Scan();
             }
-            // 尝试识别注释
+            // comment
             else if ((t.type == TokenTypes.DIV && textscanner.tmpChar == '/')
                     || (t.type == TokenTypes.MINUS && textscanner.tmpChar == '-')) {
-                // 跳过注释的内容，EOF特判
                 while (textscanner.tmpChar != '\n' && textscanner.tmpChar != '\r'
                         && textscanner.tmpChar != TextScanner.EOF) {
                     textscanner.Scan();
                 }
-                // 找到注释要寻找下一个标记返回
                 return GetToken();
             }
-            // 返回原本记号
+            // other symbols
             return t;
         }
     }

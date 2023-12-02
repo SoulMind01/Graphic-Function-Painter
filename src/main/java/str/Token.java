@@ -1,6 +1,5 @@
 package main.java.str;
 
-//需要用到的记号的属性可能是双精度浮点数或者字符串
 public class Token {
     public TokenTypes type;
     public String name;

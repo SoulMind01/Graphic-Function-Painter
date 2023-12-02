@@ -3,14 +3,12 @@ package main.java.analyser;
 import main.java.nodes.*;
 
 public class Expression {
-    //后序遍历节点需要维护变量T处处相等
+    // Post-order traversal of nodes requires maintaining the variable T equal
+    // everywhere
     public double Expression2Value(Node root, double T) {
-        //常数节点
         if (root instanceof ConstNumNode) {
             return ((ConstNumNode) root).val;
-        }
-        //函数节点
-        else if (root instanceof FunctionNode) {
+        } else if (root instanceof FunctionNode) {
             double ans = Expression2Value(((FunctionNode) root).child, T);
             switch (((FunctionNode) root).FunctionType) {
                 case "SIN":
@@ -26,13 +24,9 @@ public class Expression {
                 case "LN":
                     return Math.log(ans);
             }
-        }
-        //变量节点
-        else if (root instanceof TNode) {
+        } else if (root instanceof TNode) {
             return T;
-        }
-        //二元运算符节点
-        else {
+        } else {
             double lNum = Expression2Value(((TwoOperatorNode) root).lChild, T);
             double rNum = Expression2Value(((TwoOperatorNode) root).rChild, T);
             switch (root.Type) {
@@ -46,8 +40,10 @@ public class Expression {
                     return lNum / rNum;
                 case POWER:
                     return Math.pow(lNum, rNum);
+                default:
+                    throw new RuntimeException("Expression has a exception type");
             }
         }
-        throw new RuntimeException("表达式无法返回结果");
+        throw new RuntimeException("Expression has a exception type");
     }
 }

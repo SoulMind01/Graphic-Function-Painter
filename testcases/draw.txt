@@ -42,7 +42,7 @@ FOR T FROM 0 TO 2*PI STEP PI/50 DRAW(cos(T), sin(T));
 
 //color is (210, 105, 30);  // Chocolate
 //color is (128, 0, 128);  // Purple
-FOR T FROM 0 TO PI*20 STEP PI/50
+FOR T FROM 0 TO PI*20 STEP PI/500
 DRAW
 (
     (1-1/(10/7)) * cos(T) + 1/(10/7)*cos(-T*((10/7)-1)),

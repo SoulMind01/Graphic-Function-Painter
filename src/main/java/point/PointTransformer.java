@@ -19,11 +19,9 @@ public class PointTransformer {
         Radium = r;
     }
 
-    // 坐标变换
     public void InsertPoint(PointSet pointset, double x, double y) {
         x *= Scale_x;
         y *= Scale_y;
-        // x和y要同步变换
         double xx = x * Math.cos(Radium) + y * Math.sin(Radium);
         double yy = y * Math.cos(Radium) - x * Math.sin(Radium);
         x = xx + Origin_x;

@@ -5,8 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UI {
-    // Set<Pair<Integer, Integer>> NewPointSet = new HashSet<>();
-    // Map<Integer, Pair<Integer, Integer>> NewPointSet = new HashMap<>();
     JFrame Frame = new JFrame("Function explainer");
     PointDrawer Area = new PointDrawer();
     Graphics g;
@@ -14,7 +12,6 @@ public class UI {
 
     public void entry(PointSet pointset) {
         init();
-        // AddPoints(pointset);
         this.pointset = pointset;
         Area.repaint();
     }
@@ -33,7 +30,6 @@ public class UI {
             g.setColor(Color.RED);
             for (int i = 0; i < pointset.Set.size(); i++) {
                 try {
-                    // g.drawOval(NewPointSet.get(i).getKey(), NewPointSet.get(i).getValue(), 1, 1);
                     g.drawOval(pointset.Set.get(i).getKey(), pointset.Set.get(i).getValue(), 1, 1);
                 } catch (NullPointerException e) {
                     continue;
