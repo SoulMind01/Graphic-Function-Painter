@@ -1,10 +1,12 @@
-# Graphic-Function-Painter-Sandbox
+# Graphic-Function-Painting-Sandbox
 
 ## A function paintng sandbox.
 
 ## How to play
 
 ### Here's some simple rules to know
+
+#### 0. Run the 
 
 #### 1. Comments: Comments start with // and extend to the end of the line.
 
