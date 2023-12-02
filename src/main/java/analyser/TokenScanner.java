@@ -6,8 +6,6 @@ import main.java.point.PointTransformer;
 import main.java.str.Token;
 import main.java.str.TokenTypes;
 import main.java.str.str;
-
-import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -24,7 +22,7 @@ public class TokenScanner {
         if (s == null) {
             throw new RuntimeException("没有记号流");
         }
-        //先取一个记号再开始分析
+        // 先取一个记号再开始分析
         Scan();
         Analyse();
     }
@@ -32,14 +30,14 @@ public class TokenScanner {
     void Scan() throws IOException {
         tmpToken = s.GetToken();
         if (tmpToken.type == TokenTypes.ERROR_TOKEN) {
-            System.out.println("name:"+tmpToken.name+" val:"+tmpToken.val);
+            System.out.println("name:" + tmpToken.name + " val:" + tmpToken.val);
             throw new RuntimeException("词法错误");
         }
     }
 
-    //语法分析
+    // 语法分析
     void Analyse() throws IOException {
-        //一直匹配语句到末尾
+        // 一直匹配语句到末尾
         while (tmpToken.type != TokenTypes.END_TOKEN) {
             MatchStatement();
             MatchToken(TokenTypes.SEMICOLON, 1);
@@ -65,7 +63,7 @@ public class TokenScanner {
         }
     }
 
-    //识别ORIGIN语句
+    // 识别ORIGIN语句
     void MatchORIGINStatement() throws IOException {
         MatchToken(TokenTypes.ORIGIN, 1);
         MatchToken(TokenTypes.IS, 1);
@@ -106,18 +104,18 @@ public class TokenScanner {
         double step = expression.Expression2Value(Token2Expression(), 0);
         MatchToken(TokenTypes.DRAW, 1);
         MatchToken(TokenTypes.L_BRACKET, 1);
-        //x，y是表达式，不能在这里求值，先建树
+        // x，y是表达式，不能在这里求值，先建树
         Node x = Token2Expression();
-        //debug
+        // debug
         System.out.println("Now printing x");
         visNodeTree(x, 1);
         MatchToken(TokenTypes.COMMA, 1);
         Node y = Token2Expression();
-        //debug
+        // debug
         System.out.println("Now printing y");
-        visNodeTree(y,1);
+        visNodeTree(y, 1);
         MatchToken(TokenTypes.R_BRACKET, 1);
-        //方便后续代码运行，统一往X轴正方向画
+        // 方便后续代码运行，统一往X轴正方向画
         if (step == 0) {
             throw new RuntimeException("步长必须为非0常数");
         }
@@ -130,8 +128,9 @@ public class TokenScanner {
             to = tmp;
         }
         for (double i = from; i <= to; i += step) {
-            //把每个点带入表达式求值，坐标变换在InsertPoint方法中完成，因为此程序为读一句解释一句，所以这里可以认为已经设置好相关参数
-            pointtransformer.InsertPoint(pointset, expression.Expression2Value(x, i), expression.Expression2Value(y, i));
+            // 把每个点带入表达式求值，坐标变换在InsertPoint方法中完成，因为此程序为读一句解释一句，所以这里可以认为已经设置好相关参数
+            pointtransformer.InsertPoint(pointset, expression.Expression2Value(x, i),
+                    expression.Expression2Value(y, i));
         }
     }
 
@@ -153,7 +152,7 @@ public class TokenScanner {
         Scan();
     }
 
-    //处理加减
+    // 处理加减
     Node Token2Expression() throws IOException {
         Node lChild, rChild;
         TokenTypes NowType;
@@ -162,13 +161,13 @@ public class TokenScanner {
             NowType = tmpToken.type;
             Scan();
             rChild = Token2Term();
-            //左右节点结合成新树赋给左节点
+            // 左右节点结合成新树赋给左节点
             lChild = new TwoOperatorNode(NowType, lChild, rChild);
         }
         return lChild;
     }
 
-    //处理乘除
+    // 处理乘除
     Node Token2Term() throws IOException {
         Node lChild, rChild;
         TokenTypes NowType;
@@ -182,25 +181,26 @@ public class TokenScanner {
         return lChild;
     }
 
-    //处理正负号
+    // 处理正负号
     Node Token2Factor() throws IOException {
         Node Child;
         int Negative = 1;
-        //正号直接跳过
+        // 正号直接跳过
         if (tmpToken.type == TokenTypes.PLUS) {
             Scan();
         }
-        //翻转符号位
+        // 翻转符号位
         else if (tmpToken.type == TokenTypes.MINUS) {
             Negative *= -1;
             Scan();
         }
 
         Child = Token2Component();
-        return Negative == 1 ? Child : new TwoOperatorNode(TokenTypes.MINUS, new ConstNumNode(TokenTypes.CONST_NUM, 0), Child);
+        return Negative == 1 ? Child
+                : new TwoOperatorNode(TokenTypes.MINUS, new ConstNumNode(TokenTypes.CONST_NUM, 0), Child);
     }
 
-    //处理幂
+    // 处理幂
     Node Token2Component() throws IOException {
         Node lChild, rChild;
         lChild = Token2Atom();
@@ -212,7 +212,7 @@ public class TokenScanner {
         return lChild;
     }
 
-    //处理剩下的记号
+    // 处理剩下的记号
     Node Token2Atom() throws IOException {
         Node Child;
         switch (tmpToken.type) {
@@ -240,7 +240,7 @@ public class TokenScanner {
         }
     }
 
-    //辅助程序，用于打印表达式节点树
+    // 辅助程序，用于打印表达式节点树
     void visNodeTree(Node Root, int Depth) {
         for (int i = 0; i < Depth; i++) {
             System.out.print("\t|");

@@ -1,6 +1,6 @@
 # Graphic-Function-Painter-Sandbox
 
-## A function paintng sandbox.
+## A function painting sandbox.
 
 ## How to play
 

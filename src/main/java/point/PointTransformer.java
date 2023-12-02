@@ -1,8 +1,5 @@
 package main.java.point;
 
-import javafx.util.Pair;
-import main.java.nodes.Node;
-
 public class PointTransformer {
     double Origin_x = 0.0, Origin_y = 0.0;
     double Scale_x = 1.0, Scale_y = 1.0;
@@ -22,11 +19,11 @@ public class PointTransformer {
         Radium = r;
     }
 
-    //坐标变换
+    // 坐标变换
     public void InsertPoint(PointSet pointset, double x, double y) {
         x *= Scale_x;
         y *= Scale_y;
-        //x和y要同步变换
+        // x和y要同步变换
         double xx = x * Math.cos(Radium) + y * Math.sin(Radium);
         double yy = y * Math.cos(Radium) - x * Math.sin(Radium);
         x = xx + Origin_x;

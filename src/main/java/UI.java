@@ -1,12 +1,8 @@
 package main.java;
 
-import java.util.Map;
-
 import main.java.point.PointSet;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 
 public class UI {
     // Set<Pair<Integer, Integer>> NewPointSet = new HashSet<>();

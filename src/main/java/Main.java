@@ -15,5 +15,6 @@ public class Main {
             driver.StartDriving(file);
         }
         System.out.println("Program finished");
+        scanner.close();
     }
 }
