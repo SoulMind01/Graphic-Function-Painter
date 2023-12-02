@@ -1,10 +1,12 @@
-# Graphic-Function-Painter-Sandbox
+# Graphic-Function-Painting-Sandbox
 
 ## A function painting sandbox.
 
 ## How to play
 
 ### Here's some simple rules to know
+
+#### 0. Prepare your txt file (There's already some examples in testcases). Then run src\main\java\Main.java
 
 #### 1. Comments: Comments start with // and extend to the end of the line.
 
