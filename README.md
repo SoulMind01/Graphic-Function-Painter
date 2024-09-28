@@ -1,8 +1,8 @@
-# Graphic-Function-Painting-Sandbox
+# Graphic-Function-Painter
 
-## A function painting sandbox.
+## A function painting tool
 
-## How to play
+## How to use
 
 ### Here's some simple rules to know
 
@@ -23,5 +23,3 @@
 #### 7. Do a rotation: ***rot is exp;***
 
 #### 8. Expression: ***any operations include (),+,-,*,/,exp(),ln()***
-
-## Have fun!
